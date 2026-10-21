@@ -3,10 +3,9 @@
 \usepackage{econark-multibib}
 \usepackage{econark} % loads wasysym itself, with [nointegrals]
 % Use the notation registry's glyphs (econ-ark-tools @resources/notation).
-% econark-shortcuts.sty defines these six differently and wins in either load
+% econark-shortcuts.sty defines these four differently and wins in either load
 % order, so release them before loading the registry.
-\let\PermGroFac\relax \let\RNrmByG\relax \let\tranShkAll\relax
-\let\APFac\relax \let\RPFac\relax \let\GPFacRaw\relax
+\let\RNrmByG\relax \let\APFac\relax \let\RPFac\relax \let\GPFacRaw\relax
 \usepackage{@resources/notation/econark-notation}
 \renewcommand{\GPFac}{\GPFacRaw} % econark-shortcuts.sty makes these aliases
 \usepackage{hyperref}
