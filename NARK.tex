@@ -1,8 +1,15 @@
 \input{@resources/tex-add-search-paths} % allow latex to find custom stuff
 \documentclass{econark}
 \usepackage{econark-multibib}
-\usepackage{wasysym}
-\usepackage{econark}
+\usepackage{econark} % loads wasysym itself, with [nointegrals]
+% Use the notation registry's glyphs (econ-ark-tools @resources/notation).
+% econark-shortcuts.sty defines these six differently and wins in either load
+% order, so release them before loading the registry.
+\let\PermGroFac\relax \let\RNrmByG\relax \let\tranShkAll\relax
+\let\APFac\relax \let\RPFac\relax \let\GPFacRaw\relax
+\usepackage{@resources/notation/econark-notation}
+\renewcommand{\GPFac}{\GPFacRaw} % econark-shortcuts.sty makes these aliases
+\providecommand{\omicron}{o} % overall wealth; LaTeX itself defines no \omicron
 \usepackage{hyperref}
 \begin{document}
 
@@ -17,7 +24,8 @@
 % \forcedate{2020-06-30}  % NARK: Minor tweaks
 % \forcedate{2020-07-01}  % Version posted by doEvertyhing.sh
 % \forcedate{2020-07-02}  % Add conventions for marginal value and utility
-\date{2024-06-08} % updated with econark.sty
+% \forcedate{2024-06-08} % updated with econark.sty
+\date{2026-10-21} % notation registry's glyphs; corrections
 \vspace{2in}
 
 \keywords{ARK, Variable, Function, Object, Operator, Naming, Guidelines, Conventions}
@@ -57,7 +65,7 @@ Our aim has been to balance:
 
 \subsection{Single-Letter}
 
-We strongly discourage the use of single-letter variable names.  Reasons are presented \textit{ad nauseum} in introductory CS texts (which, we know, few economists consult); here we will note only that the extent to which your code will be influential depends upon the extent to which someone else can easily read it, which is harder if you have used variable names which could mean almost anything.  (We have made careful choices for the `default' meanings of each Roman letter (see below); hence, in the context of the toolkit, use of a single-letter name for any meaning other than the designated one will be doubly confusing).
+We strongly discourage the use of single-letter variable names.  Reasons are presented \textit{ad nauseam} in introductory CS texts (which, we know, few economists consult); here we will note only that the extent to which your code will be influential depends upon the extent to which someone else can easily read it, which is harder if you have used variable names which could mean almost anything.  (We have made careful choices for the `default' meanings of each Roman letter (see below); hence, in the context of the toolkit, use of a single-letter name for any meaning other than the designated one will be doubly confusing).
 
 It is only slightly less objectionable to name a variable after a familiar letter in another commonly used alphabet (say, \texttt{delta}).  Your future self (and other users) will not know which of the many possible meanings of $\delta$ you had in mind.
 
@@ -67,7 +75,7 @@ That is the spirit in which we offer preferred interpretations for the Roman let
 
 A few exceptions to these rules are explicitly noted below the table.
 
-When an alternative is needed with a meaning similar to, but distinct from, the definitions below, please use a multi-letter name to represent it.  For example, please do not use $W$ for wealth (if some measure of wealth that differs from $\ALvl$, $\BLvl$, $\HLvl$, or $\NLvl$ is needed); instead use, say, \texttt{Wlth} or \texttt{Wealth}.  (Some examples follow in a subsequent section).
+When an alternative is needed with a meaning similar to, but distinct from, the definitions below, please use a multi-letter name to represent it.  For example, please do not use $W$ for wealth (if some measure of wealth that differs from $\ALvl$, $\BLvl$, $\HLvl$, or $\omicron$ is needed); instead use, say, \texttt{Wlth} or \texttt{Wealth}.  (Some examples follow in a subsequent section).
 
 Finally, a few of the definitions below are actually prohibitions; these are based on many years of experience which have shown that use of the prohibited variable name generates more confusion than clarity.
 
@@ -90,7 +98,7 @@ Finally, a few of the definitions below are actually prohibitions; these are bas
     K & & Capital or beginning of period nonhuman assets\\
     L & & PROHIBITED: Is it Labor or Leisure or Land or ...?\\
     M & & \textit{M}arket resources (the sum of capital, capital income, and labor income)\\
-    N & & \textit{N}et wealth including human wealth ($=B + H$)\\
+    N & & \textit{N}et wealth including human wealth ($=B + H$): now $\omicron$ (see the exceptions)\\
     O & & PROHIBITED: Too similar to the number 0; too many possible meanings\\
     P & & PROHIBITED: Is it prices, permanent income, present value, profits, ...?\\
     Q & & Hayashi/Abel $Q$ (or similar asset price)\\
@@ -111,7 +119,9 @@ Finally, a few of the definitions below are actually prohibitions; these are bas
 
 \subsection{Exceptions to the Rules}
 
-The letter $\TLvl$ is an exception to the rule that lower- and upper-case versions of variables are individual and aggregate quantities.  We reserve the capital letter to designate the end of the horizon (death, or the end of the economy, occurs at the end of period $\TLvl$).  The lower case version $t$ is so ubiquitiously used as the current time period that we follow that convention here.
+The letter $\TLvl$ is an exception to the rule that lower- and upper-case versions of variables are individual and aggregate quantities.  We reserve the capital letter to designate the end of the horizon (death, or the end of the economy, occurs at the end of period $\TLvl$).  The lower case version $t$ is so ubiquitously used as the current time period that we follow that convention here.
+
+The Greek letter $\omicron$ (omicron) is an exception to the prohibition on $O$, even though it looks like a Latin o: it is \textit{o}verall wealth, net wealth including human wealth ($\omicron = b + h$).
 
 Finally, the following are exempted from the prohibition on single-letter variable names because they are used so frequently that the prohibition would be more trouble than it is worth: $a$, $b$, $c$, $m$.
 
@@ -185,15 +195,15 @@ the annual interest factor is $\Rfree=1.03$.\footnote{In the rare cases where it
 
 We depart from the upper-lower case scheme when the natural letter to use has an even more urgent use elsewhere in our scheme.
 A particularly common example occurs in the case of models like \cite{blanchardFinite} in which
-individual agents are subject to a Poisson probability of death.  Because death was common in the
-middle ages, we use the archaic Gothic font for the death rate; and the probability of survival is the cancellation of the probability of death:
+individual agents are subject to a Poisson probability of death.  We write the probability of death
+as a sans-serif $\DiePrb$ or, alternatively, as a cancelled probability of survival:
 \begin{table}[ht]
   \centering
   \begin{tabular}{|>{\ttfamily}cccl|}
     \hline
     Code & \LaTeX & Description &  \\
     \hline
-    \verb|\DiePrb|     & $\DiePrb$ or $\cancel{\Alive}$    & Probabilty of death ($\DiePrb=\Alive-1$) &
+    \verb|\DiePrb|     & $\DiePrb$ or $\cancel{\Alive}$    & Probability of death ($\DiePrb=1-\Alive$) &
     \\ \verb|\LivPrb|     & $\LivPrb$ or $\Alive$     & Probability to not die $\Alive=(1-\DiePrb)$ &
     \\	\hline
   \end{tabular}
@@ -209,7 +219,7 @@ and lower-case Greek representations), as to be worth standardizing.
 
 Programmers should
 use the corresponding variable name without the backslash as the name of the corresponding object
-in their code.  For example, the Coefficient of Relative Risk Aversion is $\verb|\CRRA|$ in a \LaTeX
+in their code.  For example, the Coefficient of Relative Risk Aversion is $\verb|\CRRA|$ in a \LaTeX{}
 document and \texttt{CRRA} in a software module.
 
 \hypertarget{Parameters}{}
@@ -227,28 +237,29 @@ document and \texttt{CRRA} in a software module.
     \\ \verb|\deprRte|     & $\deprRte$    & Depreciation Rate & $\DeprFac = 1-\deprRte$
     \\ \verb|\TranShkAgg|  & $\TranShkAgg$ & Transitory shock (aggregate) & $\Ex_{t}[\TranShkAgg_{t+n}]=1$ if $\TranShkAgg$ iid
     \\ \verb|\tranShkInd|  & $\tranShkInd$ & Transitory shock (individual) &  $\Ex_{t}[\tranShkInd_{t+n}]=1$ if $\tranShkInd$ iid
-    \\ \verb|\tranShkEmp|  & $\tranShkEmp$ & Transitory shock (individual, employed) &  $\Ex_{t}[\tranShkInd_{t+n}]=1$ if $\tranShkInd$ iid
+    \\ \verb|\tranShkEmp|  & $\tranShkEmp$ & Transitory shock (individual, employed) &  $\Ex_{t}[\tranShkEmp_{t+n}]=1$ if $\tranShkEmp$ iid
     \\ \verb|\PermShkAgg|  & $\PermShkAgg$ & Permanent shock (aggregate) & $\Ex_{t}[\PermShkAgg_{t+n}]=1$ if $\PermShkAgg$ iid
     \\ \verb|\permShkInd|  & $\permShkInd$ & Permanent shock (individual) & $\Ex_{t}[\permShkInd_{t+n}]=1$ if $\permShkInd$ iid
     \\ \verb|\PopGroFac|      & $\PopGroFac$ & Population Growth Factor & $\mathtt{Pop}_{t+1} = \PopGroFac \mathtt{Pop}_{t}$
-    \\ \verb|\popGroRte|      & $\popGroRte$ & Population Growth rate & $\PopGroFac = 1 + \popGroRte$
+    \\ \verb|\popGroRte|      & $\popGroRte$ & Population Growth rate (deprecated) & $\PopGroFac = 1 + \popGroRte$
     \\ \verb|\PtyGroFac|      & $\PtyGroFac$ & Productivity Growth Factor & $\YLvl_{t+1}/\YLvl_{t} = \PtyGroFac \PopGroFac$
     \\ \verb|\ptyGroRte|      & $\ptyGroRte$ & Productivity Growth rate & $\PtyGroFac = (1+\ptyGroRte)$
-    \\ \verb|\GDPGroFac|      & $\PtyGroFac$ & Productivity Growth Factor & $\GLvl = \PtyGroFac \PopGroFac$
     \\ \verb|\leiShare|    & $\leiShare$ & Leisure share, Cobb-Douglas utility & $\uFunc(c,z)=(1-\CRRA)^{-1}(c^{1-\leiShare}z^{\leiShare})^{1-\CRRA}$
     \\ \verb|\MPC|         & $\MPC$ & Marginal Propensity to Consume & $\cFunc^{\mNrm}(\mNrm)=\partial \cNrm/\partial \mNrm$
     \\ \verb|\APFac|       & $\APFac$ & Absolute Patience Factor (\texttt{Thorn}) & $\APFac = (\Rfree \DiscFac)^{1/\CRRA} $
-    \\ \verb|\APRte|       & $\APRte$ & Absolute Patience rate (\texttt{thorn}) & $\log \APFac \approx \CRRA^{-1}(\rfree-\discRte) $
-    \\ \verb|\GPFac|       & $\GPFac$ & Growth Patience Factor (\texttt{Thorn}/{$\PtyGroFac$}) & $\APFac = (\Rfree \DiscFac)^{1/\CRRA}/\PtyGroFac$
-    \\ \verb|\GPRte|       & $\GPRte$ & Growth Patience rate (\texttt{thorn}-$\rfree$) & $\GPRte \approx \APRte -\ptyGroRte $
+    \\ \verb|\APRte|       & $\APRte$ & Absolute Patience rate (\texttt{thorn}) & $\APRte = \log \APFac \approx \CRRA^{-1}(\rfree-\discRte) $
+    \\ \verb|\GPFac|       & $\GPFac$ & Growth Patience Factor (\texttt{Thorn}/$\PermGroFac$) & $\GPFac = \APFac/\PermGroFac$
+    \\ \verb|\GPRte|       & $\GPRte$ & Growth Patience rate (\texttt{thorn}$-\PermGroRte$) & $\GPRte \approx \APRte -\PermGroRte $
     \\ \verb|\RPFac|       & $\RPFac$ & Return Patience Factor (\texttt{Thorn}/$\Rfree$) & $\RPFac = \APFac/\Rfree $
-    \\ \verb|\RPRte|        & $\RPRte$ & Return Patience rate (\texttt{thorn}) & $\RPRte \approx \APRte -\rfree $
+    \\ \verb|\RPRte|        & $\RPRte$ & Return Patience rate (\texttt{thorn}$-\rfree$) & $\RPRte \approx \APRte -\rfree $
     \\ \verb|\riskyshare|  & $\riskyshare$ & Portfolio share in risky assets & $\Rport_{t+1}=(1-\riskyshare)\Rfree+\riskyshare\Risky_{t+1}$
     \\	\hline
   \end{tabular}
   \caption{Parameters}
   \label{table:Parameters}
 \end{table}
+
+The individual transitory shock $\tranShkInd$ includes any zero-income event, so \verb|\tranShkAll| is another name for the same object.  Because $\xi$ is the transitory shock, using it for the population growth rate (\verb|\popGroRte|) is deprecated; no replacement has been chosen.
 
 Mnemonics:
 \begin{itemize}
@@ -301,7 +312,7 @@ A few operators are so universally used that it will be useful to define them.
     \\ \textit{[object]}\texttt{Rte} & - & A `rate' variable like the discount rate $\discRte$
     \\ \textit{[object]}\texttt{Fac} & - & A factor variable like the discount factor $\DiscFac$
     \\ \textit{[object]}\texttt{Amt} & - & An amount, like \texttt{TaxAmt} which might be lump-sum
-    \\ \textit{[object]}\texttt{Nrm} & - & A normalized quantity; ex: \texttt{RNrm}=$\Rfree/\PtyGroFac$
+    \\ \textit{[object]}\texttt{Nrm} & - & A normalized quantity; ex: \texttt{RNrmByG}=$\RNrmByG=\Rfree/\PermGroFac$
     \\ \textit{[object]}\texttt{Abve} & - & Range of points ABoVE some boundary
     \\ \textit{[object]}\texttt{Belw} & - & Range of points BELoW some boundary
     \\ \textit{[object]}\texttt{Grid} & - & Points to be used as a grid for interpolations
