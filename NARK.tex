@@ -9,7 +9,6 @@
 \let\APFac\relax \let\RPFac\relax \let\GPFacRaw\relax
 \usepackage{@resources/notation/econark-notation}
 \renewcommand{\GPFac}{\GPFacRaw} % econark-shortcuts.sty makes these aliases
-\providecommand{\omicron}{o} % overall wealth; LaTeX itself defines no \omicron
 \usepackage{hyperref}
 \begin{document}
 
@@ -75,7 +74,7 @@ That is the spirit in which we offer preferred interpretations for the Roman let
 
 A few exceptions to these rules are explicitly noted below the table.
 
-When an alternative is needed with a meaning similar to, but distinct from, the definitions below, please use a multi-letter name to represent it.  For example, please do not use $W$ for wealth (if some measure of wealth that differs from $\ALvl$, $\BLvl$, $\HLvl$, or $\omicron$ is needed); instead use, say, \texttt{Wlth} or \texttt{Wealth}.  (Some examples follow in a subsequent section).
+When an alternative is needed with a meaning similar to, but distinct from, the definitions below, please use a multi-letter name to represent it.  For example, please do not use $W$ for wealth (if some measure of wealth that differs from $\ALvl$, $\BLvl$, $\HLvl$, or $o$ is needed); instead use, say, \texttt{Wlth} or \texttt{Wealth}.  (Some examples follow in a subsequent section).
 
 Finally, a few of the definitions below are actually prohibitions; these are based on many years of experience which have shown that use of the prohibited variable name generates more confusion than clarity.
 
@@ -98,7 +97,7 @@ Finally, a few of the definitions below are actually prohibitions; these are bas
     K & & Capital or beginning of period nonhuman assets\\
     L & & PROHIBITED: Is it Labor or Leisure or Land or ...?\\
     M & & \textit{M}arket resources (the sum of capital, capital income, and labor income)\\
-    N & & \textit{N}et wealth including human wealth ($=B + H$): now $\omicron$ (see the exceptions)\\
+    N & & \textit{N}et wealth including human wealth ($=B + H$): now $o$ (see the exceptions)\\
     O & & PROHIBITED: Too similar to the number 0; too many possible meanings\\
     P & & PROHIBITED: Is it prices, permanent income, present value, profits, ...?\\
     Q & & Hayashi/Abel $Q$ (or similar asset price)\\
@@ -121,7 +120,7 @@ Finally, a few of the definitions below are actually prohibitions; these are bas
 
 The letter $\TLvl$ is an exception to the rule that lower- and upper-case versions of variables are individual and aggregate quantities.  We reserve the capital letter to designate the end of the horizon (death, or the end of the economy, occurs at the end of period $\TLvl$).  The lower case version $t$ is so ubiquitously used as the current time period that we follow that convention here.
 
-The Greek letter $\omicron$ (omicron) is an exception to the prohibition on $O$, even though it looks like a Latin o: it is \textit{o}verall wealth, net wealth including human wealth ($\omicron = b + h$).
+The lower-case letter $o$ is an exception to the prohibition on O: it is total wealth, nonhuman plus human ($o = b + h$).  The upper-case O remains prohibited.
 
 Finally, the following are exempted from the prohibition on single-letter variable names because they are used so frequently that the prohibition would be more trouble than it is worth: $a$, $b$, $c$, $m$.
 
