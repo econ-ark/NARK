@@ -3,6 +3,98 @@
 Versioning: SemVer on `notation.yml`'s `meta.version`. MAJOR = change to an
 existing rendering or meaning; MINOR = additions; PATCH = gloss/typo fixes.
 
+## v4.0.0 — 2026-10-21
+
+- **MAJOR — econark-shortcuts and the registry agree on every shared name.** Owner, in an
+  earlier econ-ark-tools session at about 16:48 EDT: "OK, implement your recs" (branch
+  `notation-patience-factor-forms`, commit b23e5668, never merged); then, in this session at
+  22:40:21 EDT: "I want to reconcile and merge all the branches on which we have been trying
+  already to reconcile notation". This re-applies that branch on top of v3.0.0.
+  - `\RPFac`, `\GPFacRaw`, `\GPFacMod`: econark-shortcuts writes the subscript forms
+    `\APFac_{\Rfree}`, `\APFac_{\PermGroFac}`, `\APFac_{\PermGroFacAdj}`, not the ratios
+    Þ/R, Þ/𝒢 that define them. `\GPFac` is now `\GPFacRaw`, not a separate copy.
+  - The registry's `\RPFac` takes the sans-serif R of `\Rfree` (`\APFac_{\mathsf{R}}`; it was an
+    italic R), and `\GPFacRaw` is `\APFac_{\PermGroFac}`.
+  - `\RNrmByG`, `\RNrmByGRnd`: calligraphic `\mathcal{R}` in econark-shortcuts (was
+    `\mathscr{R}`), as in the registry and shortcuts' own `\Rnorm`.
+  - In print, documents that load econark-shortcuts change: the BST paper's 342 `\RPFac` and
+    187 `\GPFacRaw` read Þ_R and Þ_𝒢, not Þ/R and Þ/𝒢, and its 77 `\RNrmByG` turn
+    calligraphic. `BufferStockTheory.tex:76-89` records the coauthor (AS) objecting to a stacked
+    `\frac` and accepting the inline ratio Þ/R; he has not seen the subscript forms, so this is a
+    new change to his paper.
+
+## v3.0.0 — 2026-10-21
+
+- **MAJOR — the return region's upper edge is ō, not ζ** (owner: "OK, o-bar sounds great
+  implement that", 22:07:59 EDT). The `return-region` row now has a macro, `\wbarMax` = `\bar{o}`:
+  ō = C₀/(1 − Þ_𝒢), the fixed point of o ↦ Þ_𝒢 o + C₀, which anchors the travel time
+  n(o) = ln(o/ō)/(−þ_g). o is the object's own letter (total wealth) and the bar is the registry's
+  mark for an upper bound (κ̄, h̄, ḡ). This ends the registry's one remaining overlap with
+  econark-shortcuts (ζ is its `\leiShare` and `\unins`) and leaves ζ to the powerlaw draft's ζ*,
+  the Pareto exponent, for which ζ is the literature's letter. The draft's ζ is recorded as a NOT
+  SANCTIONED `powerlaw-pages` dialect.
+- The same row wrote the powerlaw pages' θ for the transitory shock: its gloss now says ξ has
+  bounded support, and C₀'s θ_max is ξ̄ (`\tranShkMax`).
+
+## v2.1.1 — 2026-10-21
+
+- **econark-shortcuts' `\APFac` bolds the thorn once** (owner: "yes, it should be a single \textbf
+  not double"). It was `\text{\pmb{\Thorn}}`, and with BufferStockTheory's `\Thorn` = `\pmb{\TH}`
+  (and v2.1.0's copy of it here) the thorn was bolded twice and looked smeared. Now `\Thorn` is
+  the plain glyph `\text{\TH}` and `\APFac` is `\textbf{\Thorn}`, the registry's rendering, so
+  `\APFac` leaves the README's list of macros that render differently. BST's
+  `\providecommand{\Thorn}{\pmb{\TH}}` (local.sty, the slides) becomes a no-op whichever loads
+  first, since shortcuts' `\ARKcommand` overwrites; its tikz `\Pat` = `\textbf{\Thorn}` is
+  single-bold too. `\RPFac` and `\GPFacRaw` keep their ratio forms.
+
+## v2.1.0 — 2026-10-21
+
+Requested by the buffer-stock schemas' session (llorracc/sce-wg-1-dev), item 5 of its notation
+batch; the owner approved the batch there: "all five as written" (20:43:30 EDT).
+
+- **Rows for the schemas' symbols (MINOR).** θ, the employed draw (`\tranShkEmp`); ξ_U, income
+  while unemployed (`\IncUnemp`, python `IncUnemp`); the minima ξ̲, θ̲, ψ̲ (`\tranShkMin`,
+  `\tranShkEmpMin`, `\permShkIndMin`); the borrowing constraints a̲_Art, a̲_Nat and the one in force,
+  a̲ (`\BoroCnstArt`, `\BoroCnstNat`, `\aMin`); the lowest market resources m̲ (`\mNrmMin`); survival
+  ℒ (`\LivPrb`); and the probability of the worst income, p_worst (`\pWorst`). Seven reuse
+  econark-shortcuts' macros with the same rendering; `\BoroCnstArt`, `\BoroCnstNat`, `\pWorst` and
+  `\mNrmMin` are new, named for HARK where HARK has a name.
+- **`\IncUnemp` is ξ_U in econark-shortcuts.sty**, not μ, which is this registry's log excess
+  resources. Owner, in the sce-wg-1-dev session: "fix \IncUnemp's erroneous expansion" (19:59:01
+  EDT), after choosing ξ_U there at 19:25.
+- **econark-shortcuts.sty defines `\Thorn` and `\thorn`** (owner: "yes", 2026-10-21, to adding
+  the definition). Its `\APFac` and its rates `\APRte`, `\RPRte`, `\GPRte` used them without
+  defining them, so a document that loaded the file without its own definitions failed. `\Thorn`
+  is BufferStockTheory's `\pmb{\TH}` (in `\text`), so BST's output does not change; `\thorn` is a
+  plain `\th`. Both need T1 encoding, as the registry's `\text{Þ}` does.
+- **`mpc-min`'s define is κ̲ = max(0, 1 − Þ_R)**, so it covers a failing RIC, where the limiting
+  MPC is 0. The schemas write R(1 − κ̲) for min(Þ, R), which needs that reading.
+- **A `plain` field beside `unicode`**, for terminals and code where a combining underline
+  misdraws: `κ_min`, `h_min` and every new underlined row. NOTATION.md's table gains a Plain column.
+
+## v2.0.0 — 2026-10-21
+
+- **MAJOR — the patience factors are bold (owner ruling, 2026-10-21):** "yes, factor rows
+  should change to bold". `\APFac` = `\textbf{Þ}`, `\RPFac` = `\textbf{Þ}_{R}`,
+  `\GPFacRaw` = `\textbf{Þ}_{\PermGroFac}`; they were plain `\text{Þ}`. This brings the
+  registry into line with the owner's standing rule of 2026-10-04: a factor, a number compared
+  with 1, takes a bold capital thorn; a rate, its log, a small thorn (`\thorn`, unchanged). The
+  registry had contradicted that rule while nothing recorded the question as open.
+  econark-shortcuts' `\APFac` was already bold, by `\pmb`. Unicode has no bold thorn, so the
+  `unicode` and `define` fields still write Þ.
+- **The powerlaw draft takes its notation from `@resources` (owner ruling, 2026-10-21):** "the
+  powerlaw work needs to use the same @resources/econ-ark-tools approach as the other papers;
+  that way it does not have many things to define, except mathematical objects absent from the
+  other wor[k]". Its pages define about 60 macros in their own `myst.yml`; they are to take the
+  shared ones from `@resources/` and define only objects absent from the other papers. The
+  `powerlaw-pages` dialect entries (Γ for the growth factor, θ for the transitory shock, plain Þ
+  for the factors) are now marked NOT SANCTIONED: they record what the pages' own macros still
+  write, until they switch. Taking the shared macros settles the transitory shock's direction,
+  which ruling 4 had left open (ξ, not θ), and the excess-resources unification, which had been
+  "candidate, NOT ruled" (m̈, `\mNrmEx`, not mᵉ); the constraint-end exponent's definition here
+  now writes m̈. The `bst-paper` (γ for ρ) and `hark-python` (h − 1) dialects are not the
+  powerlaw draft and are unchanged.
+
 ## v1.0.0 — 2026-07-16
 
 Owner rulings from the powerlaw editorial pass (reactions round, 2026-07-16):
