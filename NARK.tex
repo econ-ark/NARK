@@ -1,6 +1,5 @@
 \input{@resources/tex-add-search-paths} % allow latex to find custom stuff
 \documentclass{econark}
-\usepackage{econark-multibib}
 \usepackage{econark} % loads wasysym itself, with [nointegrals]
 \usepackage{@resources/notation/econark-notation} % the notation registry (econ-ark-tools)
 \usepackage{hyperref}
@@ -387,7 +386,7 @@ Here are the preferred shortnames for some of our models:
 \vfill\eject\pagebreak\newpage
 
 \bibliographystyle{econark}
-\econarkmultibib{\texname}
+\bibliography{\texname} % NARK.bib only, not the machine's system.bib
 
 \end{document}
 
