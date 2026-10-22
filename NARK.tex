@@ -18,7 +18,8 @@
 % \forcedate{2020-07-01}  % Version posted by doEvertyhing.sh
 % \forcedate{2020-07-02}  % Add conventions for marginal value and utility
 % \forcedate{2024-06-08} % updated with econark.sty
-\date{2026-10-21} % notation registry's glyphs; corrections
+% \forcedate{2026-10-21} % notation registry's glyphs; corrections
+\date{2026-10-22} % notation registry v6.0.0
 \vspace{2in}
 
 \keywords{ARK, Variable, Function, Object, Operator, Naming, Guidelines, Conventions}
@@ -51,6 +52,8 @@ Our aim has been to balance:
 \item Combinatoriality (which encourages mashups)
 \end{itemize}
 
+The symbols in this document follow version 6.0.0 of the Econ-ARK notation registry, which is maintained in the \texttt{econ-ark-tools} repository and copied into this one under \texttt{@resources/notation}.
+
 
 \pagebreak
 
@@ -68,7 +71,7 @@ That is the spirit in which we offer preferred interpretations for the Roman let
 
 A few exceptions to these rules are explicitly noted below the table.
 
-When an alternative is needed with a meaning similar to, but distinct from, the definitions below, please use a multi-letter name to represent it.  For example, please do not use $W$ for wealth (if some measure of wealth that differs from $\ALvl$, $\BLvl$, $\HLvl$, or $o$ is needed); instead use, say, \texttt{Wlth} or \texttt{Wealth}.  (Some examples follow in a subsequent section).
+When an alternative is needed with a meaning similar to, but distinct from, the definitions below, please use a multi-letter name to represent it.  For example, please do not use $W$ for wealth (if some measure of wealth that differs from $\ALvl$, $\BLvl$, $\HLvl$, or $O$ is needed); instead use, say, \texttt{Wlth} or \texttt{Wealth}.  (Some examples follow in a subsequent section).
 
 Finally, a few of the definitions below are actually prohibitions; these are based on many years of experience which have shown that use of the prohibited variable name generates more confusion than clarity.
 
@@ -91,8 +94,8 @@ Finally, a few of the definitions below are actually prohibitions; these are bas
     K & & Capital or beginning of period nonhuman assets\\
     L & & PROHIBITED: Is it Labor or Leisure or Land or ...?\\
     M & & \textit{M}arket resources (the sum of capital, capital income, and labor income)\\
-    N & & \textit{N}et wealth including human wealth ($=B + H$): now $o$ (see the exceptions)\\
-    O & & PROHIBITED: Too similar to the number 0; too many possible meanings\\
+    N & & \textit{N}et wealth including human wealth ($=B + H$): now $O$ (see the exceptions)\\
+    O & & \textit{O}verall wealth ($O = B + H$); see the exceptions\\
     P & & PROHIBITED: Is it prices, permanent income, present value, profits, ...?\\
     Q & & Hayashi/Abel $Q$ (or similar asset price)\\
     R & & \textit{R}eturn (see the variants articulated below)\\
@@ -101,7 +104,7 @@ Finally, a few of the definitions below are actually prohibitions; these are bas
     U & & \textit{U}tility\\
     V & & \textit{V}alue\\
     W & & \textit{W}age\\
-    X & & e\textit{X}penditures (as distinct from consumption; e.g., for durables)\\
+    X & & e\textit{X}penditures, as distinct from consumption; see the exceptions\\
     Y & & Noncapital income (usually, the sum of transfer and labor income)\\
     Z & & Lei\textit{Z}ure in consumption/leisure tradeoff\\
   \\ \hline
@@ -114,7 +117,11 @@ Finally, a few of the definitions below are actually prohibitions; these are bas
 
 The letter $\TLvl$ is an exception to the rule that lower- and upper-case versions of variables are individual and aggregate quantities.  We reserve the capital letter to designate the end of the horizon (death, or the end of the economy, occurs at the end of period $\TLvl$).  The lower case version $t$ is so ubiquitously used as the current time period that we follow that convention here.
 
-The lower-case letter $o$ is an exception to the prohibition on O: it is total wealth, nonhuman plus human ($o = b + h$).  The upper-case O remains prohibited.
+The letter O was prohibited because it is too similar to the number 0.  The prohibition is lifted for total wealth, nonhuman plus human: $\wbar = \bNrm + \hNrm$ for an individual, and $O$ for the aggregate.
+
+The capital $X$ keeps its meaning, expenditures, and is an exception to the case rule: it is not the aggregate of a lower-case $x$.
+
+A prohibition covers only the plain letter.  Other fonts of a prohibited letter remain available, and several are in use: $\PDV$ for present discounted value, $\Ex$ for expectations, $\LivPrb$ for the probability of survival, and $\labor$ for labor.  Likewise the sans-serif $\DiePrb$ for the probability of death does not collide with $D$ for debt.
 
 Finally, the following are exempted from the prohibition on single-letter variable names because they are used so frequently that the prohibition would be more trouble than it is worth: $a$, $b$, $c$, $m$.
 
@@ -192,17 +199,25 @@ individual agents are subject to a Poisson probability of death.  We write the p
 as a sans-serif $\DiePrb$ or, alternatively, as a cancelled probability of survival:
 \begin{table}[ht]
   \centering
-  \begin{tabular}{|>{\ttfamily}cccl|}
+  \begin{tabular}{|>{\ttfamily}rcll|}
     \hline
-    Code & \LaTeX & Description &  \\
-    \hline
-    \verb|\DiePrb|     & $\DiePrb$ or $\cancel{\Alive}$    & Probability of death ($\DiePrb=1-\Alive$) &
-    \\ \verb|\LivPrb|     & $\LivPrb$ or $\Alive$     & Probability to not die $\Alive=(1-\DiePrb)$ &
+    Code & \LaTeX & Description & Definition
+    \\ \hline
+    \verb|\DiePrb|        & $\DiePrb$ or $\cancel{\LivPrb}$ & Probability of death & $\DiePrb=1-\LivPrb$
+    \\ \verb|\LivPrb|     & $\LivPrb$     & Probability of survival (also \verb|\Alive|) & $\LivPrb=1-\DiePrb$
+    \\ \verb|\RfreeEff|   & $\RfreeEff$   & Return factor for a survivor & $\RfreeEff=\Rfree/\LivPrb$
+    \\ \verb|\DiscFacEff| & $\DiscFacEff$ & Discount factor including survival & $\DiscFacEff=\DiscFac\LivPrb$
+    \\ \verb|\APFacEff|   & $\APFacEff$   & Absolute Patience Factor including survival & $\APFacEff=(\Rfree\DiscFacEff)^{1/\CRRA}$
+    \\ \verb|\RPFacEff|   & $\RPFacEff$   & Return Patience Factor including survival & $\RPFacEff=\APFacEff/\Rfree$
+    \\ \verb|\GPFacEff|   & $\GPFacEff$   & Growth Patience Factor including survival & $\GPFacEff=\APFacEff/\PermGroFac$
+    \\ \verb|\GPFacLiv|   & $\GPFacLiv$   & Mortality-adjusted Growth Patience Factor & $\GPFacLiv=\LivPrb\APFacEff/\PermGroFac$
     \\	\hline
   \end{tabular}
-  \caption{Special Cases: Factors and Rates}
+  \caption{Survival}
   \label{table:SpecialFactors}
 \end{table}
+
+A ring marks the version of a factor that includes survival: $\DiscFac$ and $\APFac$ without the ring exclude it.  The mortality-adjusted growth impatience condition (GIC-Liv) is ${\GPFacLiv<1}$, where $\GPFacLiv$ is $\LivPrb$ times $\GPFacEff$.  In HARK's code \texttt{DiscFacEff} is $\DiscFacEff$, and the patience factors \texttt{APFac}, \texttt{RPFac} and \texttt{GPFacRaw} already include survival: they are $\APFacEff$, $\RPFacEff$ and $\GPFacEff$, not $\APFac$, $\RPFac$ and $\GPFac$.
 
 \section{Parameters}
 Some parameters are worth defining because they are likely to be
@@ -222,19 +237,22 @@ document and \texttt{CRRA} in a software module.
     \hline
     Name                   & \LaTeX         & Description & Illustration
     \\ \hline
-    \verb|\CARA|           & $\CARA$       & Coefficient of Absolute Risk Aversion &$\uFunc(\bullet)=-\CARA^{-1} e^{-\CARA \bullet}$
+    \verb|\CARA|           & $\CARA$       & Coefficient of Absolute Risk Aversion &$\uFunc(\bullet)=-\CARA^{-1} e^{-\CARA\,\bullet}$
     \\ \verb|\CRRA|        & $\CRRA$       & Coefficient of Relative Risk Aversion & $\uFunc(\bullet)=(1-\CRRA)^{-1}\bullet^{1-\CRRA}$
     \\ \verb|\DiscFac|     & $\DiscFac$    & Time Discount Factor & $\uFunc^{\prime}(\cLvl_{t}) =  \Rfree \DiscFac \uFunc^{\prime}(\cLvl_{t+1})$
     \\ \verb|\discRte|     & $\discRte$    & Time Discount rate & $\discRte=\DiscFac^{-1}-1$
     \\ \verb|\DeprFac|     & $\DeprFac$    & Depreciation Factor (Hebrew \texttt{daleth}) & $\Kap_{t+1} = \DeprFac \Kap_{t}+\ILvl_{t}$
     \\ \verb|\deprRte|     & $\deprRte$    & Depreciation Rate & $\DeprFac = 1-\deprRte$
-    \\ \verb|\TranShkAgg|  & $\TranShkAgg$ & Transitory shock (aggregate) & $\Ex_{t}[\TranShkAgg_{t+n}]=1$ if $\TranShkAgg$ iid
+    \\ \verb|\kapShare|    & $\kapShare$   & Capital share, Cobb-Douglas production & $F(\Kap,\labor)=\Kap^{\kapShare}\labor^{1-\kapShare}$
+    \\ \verb|\labor|       & $\labor$      & Labor (or labor productivity) & $W\labor$ is labor income
+    \\ \verb|\TranShkAgg|  & $\TranShkAgg$ & Transitory shock (aggregate of $\tranShkEmp$) & $\Ex_{t}[\TranShkAgg_{t+n}]=1$ if $\TranShkAgg$ iid
     \\ \verb|\tranShkInd|  & $\tranShkInd$ & Transitory shock (individual) &  $\Ex_{t}[\tranShkInd_{t+n}]=1$ if $\tranShkInd$ iid
     \\ \verb|\tranShkEmp|  & $\tranShkEmp$ & Transitory shock (individual, employed) &  $\Ex_{t}[\tranShkEmp_{t+n}]=1$ if $\tranShkEmp$ iid
+    \\ \verb|\pZero|       & $\pZero$      & Probability of unemployment & $\Pr(\tranShkInd=\IncUnemp)=\pZero$
     \\ \verb|\PermShkAgg|  & $\PermShkAgg$ & Permanent shock (aggregate) & $\Ex_{t}[\PermShkAgg_{t+n}]=1$ if $\PermShkAgg$ iid
     \\ \verb|\permShkInd|  & $\permShkInd$ & Permanent shock (individual) & $\Ex_{t}[\permShkInd_{t+n}]=1$ if $\permShkInd$ iid
     \\ \verb|\PopGroFac|      & $\PopGroFac$ & Population Growth Factor & $\mathtt{Pop}_{t+1} = \PopGroFac \mathtt{Pop}_{t}$
-    \\ \verb|\popGroRte|      & $\popGroRte$ & Population Growth rate (deprecated) & $\PopGroFac = 1 + \popGroRte$
+    \\ \verb|\popGroRte|      & $\popGroRte$ & Population Growth rate & $\popGroRte \approx \PopGroFac - 1$
     \\ \verb|\PtyGroFac|      & $\PtyGroFac$ & Productivity Growth Factor & $\YLvl_{t+1}/\YLvl_{t} = \PtyGroFac \PopGroFac$
     \\ \verb|\ptyGroRte|      & $\ptyGroRte$ & Productivity Growth rate & $\PtyGroFac = (1+\ptyGroRte)$
     \\ \verb|\leiShare|    & $\leiShare$ & Leisure share, Cobb-Douglas utility & $\uFunc(c,z)=(1-\CRRA)^{-1}(c^{1-\leiShare}z^{\leiShare})^{1-\CRRA}$
@@ -246,13 +264,17 @@ document and \texttt{CRRA} in a software module.
     \\ \verb|\RPFac|       & $\RPFac$ & Return Patience Factor (\texttt{Thorn}/$\Rfree$) & $\RPFac = \APFac/\Rfree $
     \\ \verb|\RPRte|        & $\RPRte$ & Return Patience rate (\texttt{thorn}$-\rfree$) & $\RPRte \approx \APRte -\rfree $
     \\ \verb|\riskyshare|  & $\riskyshare$ & Portfolio share in risky assets & $\Rport_{t+1}=(1-\riskyshare)\Rfree+\riskyshare\Risky_{t+1}$
+    \\ \verb|\eprem|       & $\eprem$      & Log equity premium & $\eprem=\Ex[\log\Risky]-\log\Rfree$
+    \\ \verb|\DiscFacSprd| & $\DiscFacSprd$ & Spread of discount factors &
+    \\ \verb|\paretoExp|   & $\paretoExp$  & Pareto exponent of wealth & $\Pr(\text{wealth}>\bullet)\propto\bullet^{-\paretoExp}$
+    \\ \verb|\weight|      & $\weight$     & A weight (mass, probability, mixture) & $\sum_{i}\weight_{i}=1$
     \\	\hline
   \end{tabular}
   \caption{Parameters}
   \label{table:Parameters}
 \end{table}
 
-The individual transitory shock $\tranShkInd$ includes any zero-income event, so \verb|\tranShkAll| is another name for the same object.  Because $\xi$ is the transitory shock, using it for the population growth rate (\verb|\popGroRte|) is deprecated; no replacement has been chosen.
+The individual transitory shock $\tranShkInd$ includes any zero-income event, so \verb|\tranShkAll| is another name for the same object.  With probability $\pZero$ the consumer is unemployed and $\tranShkInd=\IncUnemp$; otherwise $\tranShkInd=\tranShkEmp(1-\pZero\IncUnemp)/(1-\pZero)$, where $\tranShkEmp$ is the employed draw, so $\Ex[\tranShkInd]=1$.  In HARK's code $\pZero$ is \texttt{UnempPrb}.  $\TranShkAgg$ is the aggregate of $\tranShkEmp$ (\verb|\TranShkEmp| is another name for it); $\tranShkInd$ has no aggregate.  The population growth rate has no letter of its own: because $\xi$ is the transitory shock, it is written $\popGroRte$.
 
 Mnemonics:
 \begin{itemize}
@@ -332,22 +354,17 @@ Shocks will generally be represented by finite vectors of outcomes and their pro
 \end{table}
 
 \hypertarget{Timing}{}
-Timing can be confusing because there can be multiple ordered steps
-within a `period.'  We will use \texttt{Prev}, \texttt{Curr}, \texttt{Next} to refer
-to steps relative to the local moment within a period, and $t$ variables to refer to succeeding periods:
+Periods are named relative to the current period $t$: \texttt{Prev}, \texttt{Now} and \texttt{Nxt} are the periods $t-1$, $t$ and $t+1$, as in the notation registry's \verb|\Now| and \verb|\Nxt|.  Because \texttt{Prev} names the previous period, steps within a period no longer have reserved words.
 \begin{table}[ht]
   \centering
   \begin{tabular}{|>{\ttfamily}lcl|}
     \hline
     \textit{[object]}tmn & - & object in period $t$ minus $n$
-    \\ \textit{[object]}tm1 & - & object in period $t$ minus 1
+    \\ \textit{[object]}Prev & - & object in period $t-1$
     \\ \textit{[object]}Now & - & object in period $t$
-    \\ \textit{[object]}t\phantom{p1}   & - & object in period $t$ (alternative definition)
-    \\ \textit{[object]}tp1 & - & object in $t$ plus 1
-    \\ \textit{[object]}tpn & - & object in $t$ plus $n$
-    \\ \textit{[object]}Prev & - & object in previous subperiod
-    \\ \textit{[object]}Curr & - & object in current subperiod
-    \\ \textit{[object]}Next & - & object in next subperiod
+    \\ \textit{[object]}t & - & object in period $t$ (alternative definition)
+    \\ \textit{[object]}Nxt & - & object in period $t+1$
+    \\ \textit{[object]}tpn & - & object in period $t$ plus $n$
     \\	\hline
   \end{tabular}
   \caption{Timing}
