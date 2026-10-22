@@ -8,6 +8,9 @@ $bibtex_use=2;
 $pdf_mode = 1;
 $rc_report = 1;
 $pdflatex="pdflatex -interaction=nonstopmode %O %S";
+# Find this repo's @resources copies ahead of any econark files in the system's TeX tree
+$ENV{'TEXINPUTS'} = './@resources/texlive/texmf-local/tex/latex//:' . ($ENV{'TEXINPUTS'} // '');
+$ENV{'BSTINPUTS'} = './@resources/texlive/texmf-local/bibtex/bst//:' . ($ENV{'BSTINPUTS'} // '');
 @default_files = ('*.tex');
 $aux_out_dir_report = 0;
 $silent  = 1;
